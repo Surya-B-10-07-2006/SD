@@ -1,0 +1,197 @@
+// Demo news data — clearly labeled as sample content, not live news
+const DEMO_ARTICLES = [
+  {
+    id: "demo-1",
+    title: "OpenAI Releases GPT-5 with Unprecedented Reasoning Capabilities",
+    description: "The latest model demonstrates significant improvements in multi-step reasoning, coding, and scientific problem-solving, setting new benchmarks across major evaluations.",
+    url: "https://example.com/openai-gpt5",
+    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600&q=80",
+    source: "Tech Insider",
+    author: "Sarah Chen",
+    publishedAt: new Date(Date.now() - 1 * 3600000).toISOString(),
+    category: "Artificial Intelligence",
+    readTime: 4
+  },
+  {
+    id: "demo-2",
+    title: "NASA's Artemis Mission Captures Stunning New Images of Lunar Surface",
+    description: "High-resolution imagery from the latest lunar orbit reveals previously uncharted craters and potential water-ice deposits near the south pole.",
+    url: "https://example.com/nasa-artemis",
+    image: "https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?w=600&q=80",
+    source: "Space Daily",
+    author: "James Okafor",
+    publishedAt: new Date(Date.now() - 2 * 3600000).toISOString(),
+    category: "Science",
+    readTime: 3
+  },
+  {
+    id: "demo-3",
+    title: "Global Markets Rally as Inflation Data Shows Continued Decline",
+    description: "Major indices surged after new economic data indicated inflation cooling faster than expected, raising hopes for interest rate cuts in the coming quarter.",
+    url: "https://example.com/markets-rally",
+    image: "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&q=80",
+    source: "Financial Times",
+    author: "Maria Lopez",
+    publishedAt: new Date(Date.now() - 3 * 3600000).toISOString(),
+    category: "Finance",
+    readTime: 5
+  },
+  {
+    id: "demo-4",
+    title: "Breakthrough in Quantum Computing Achieves 1000-Qubit Milestone",
+    description: "Researchers at a leading university have demonstrated a stable 1000-qubit processor, a major step toward practical quantum advantage in cryptography and drug discovery.",
+    url: "https://example.com/quantum-computing",
+    image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600&q=80",
+    source: "Science Weekly",
+    author: "Dr. Priya Nair",
+    publishedAt: new Date(Date.now() - 4 * 3600000).toISOString(),
+    category: "Technology",
+    readTime: 6
+  },
+  {
+    id: "demo-5",
+    title: "Climate Summit Reaches Historic Agreement on Carbon Emissions",
+    description: "Over 190 nations signed a landmark accord committing to net-zero emissions by 2045, with binding annual review mechanisms and a $500 billion green transition fund.",
+    url: "https://example.com/climate-summit",
+    image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&q=80",
+    source: "World Report",
+    author: "Elena Vasquez",
+    publishedAt: new Date(Date.now() - 5 * 3600000).toISOString(),
+    category: "Environment",
+    readTime: 5
+  },
+  {
+    id: "demo-6",
+    title: "Apple Unveils Vision Pro 2 with Holographic Display Technology",
+    description: "The second-generation spatial computing headset features a true holographic display, 40% lighter design, and a new neural interface for hands-free navigation.",
+    url: "https://example.com/apple-vision-pro-2",
+    image: "https://images.unsplash.com/photo-1491933382434-500287f9b54b?w=600&q=80",
+    source: "Tech Crunch",
+    author: "Kevin Park",
+    publishedAt: new Date(Date.now() - 6 * 3600000).toISOString(),
+    category: "Technology",
+    readTime: 4
+  },
+  {
+    id: "demo-7",
+    title: "New Study Links Mediterranean Diet to 30% Reduction in Heart Disease",
+    description: "A decade-long study of 50,000 participants confirms that adherence to a Mediterranean diet significantly reduces cardiovascular risk across all age groups.",
+    url: "https://example.com/mediterranean-diet",
+    image: "https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=600&q=80",
+    source: "Health Journal",
+    author: "Dr. Amara Diallo",
+    publishedAt: new Date(Date.now() - 7 * 3600000).toISOString(),
+    category: "Health",
+    readTime: 4
+  },
+  {
+    id: "demo-8",
+    title: "World Cup 2026 Host Cities Finalized Across North America",
+    description: "FIFA confirmed the 16 host cities spanning the United States, Canada, and Mexico, with the final scheduled at MetLife Stadium in New Jersey.",
+    url: "https://example.com/world-cup-2026",
+    image: "https://images.unsplash.com/photo-1574629810360-7efbbe195018?w=600&q=80",
+    source: "Sports Network",
+    author: "Carlos Mendez",
+    publishedAt: new Date(Date.now() - 8 * 3600000).toISOString(),
+    category: "Sports",
+    readTime: 3
+  },
+  {
+    id: "demo-9",
+    title: "EU Passes Landmark AI Regulation Act Affecting Global Tech Companies",
+    description: "The comprehensive legislation mandates transparency, bias audits, and human oversight for high-risk AI systems, with fines up to 6% of global revenue for violations.",
+    url: "https://example.com/eu-ai-act",
+    image: "https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&q=80",
+    source: "Policy Watch",
+    author: "Ingrid Hoffman",
+    publishedAt: new Date(Date.now() - 9 * 3600000).toISOString(),
+    category: "Politics",
+    readTime: 6
+  },
+  {
+    id: "demo-10",
+    title: "SpaceX Starship Completes First Successful Round-Trip Mars Simulation",
+    description: "The full-duration mission simulation, conducted in Earth orbit, validated life support, fuel production, and landing systems for a planned 2028 crewed Mars mission.",
+    url: "https://example.com/spacex-starship",
+    image: "https://images.unsplash.com/photo-1516849841032-87cbac4d88f7?w=600&q=80",
+    source: "Space Daily",
+    author: "Tom Bradley",
+    publishedAt: new Date(Date.now() - 10 * 3600000).toISOString(),
+    category: "Science",
+    readTime: 5
+  },
+  {
+    id: "demo-11",
+    title: "Global EdTech Funding Hits Record $20 Billion in First Half of Year",
+    description: "Venture capital investment in education technology surged, driven by AI tutoring platforms, skills-based learning, and corporate training solutions.",
+    url: "https://example.com/edtech-funding",
+    image: "https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&q=80",
+    source: "Business Insider",
+    author: "Yuki Tanaka",
+    publishedAt: new Date(Date.now() - 11 * 3600000).toISOString(),
+    category: "Education",
+    readTime: 4
+  },
+  {
+    id: "demo-12",
+    title: "Streaming Wars Intensify as Netflix and Disney+ Announce Content Deal",
+    description: "A landmark content-sharing agreement between the two giants will give subscribers access to combined libraries, reshaping the competitive streaming landscape.",
+    url: "https://example.com/streaming-deal",
+    image: "https://images.unsplash.com/photo-1522869635100-9f4c5e86aa37?w=600&q=80",
+    source: "Entertainment Weekly",
+    author: "Ava Williams",
+    publishedAt: new Date(Date.now() - 12 * 3600000).toISOString(),
+    category: "Entertainment",
+    readTime: 3
+  },
+  {
+    id: "demo-13",
+    title: "Cybersecurity Firm Uncovers Massive State-Sponsored Hacking Campaign",
+    description: "Researchers identified a sophisticated intrusion network targeting critical infrastructure across 40 countries, attributed to a nation-state threat actor.",
+    url: "https://example.com/cybersecurity-hack",
+    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&q=80",
+    source: "Cyber Report",
+    author: "Dmitri Volkov",
+    publishedAt: new Date(Date.now() - 13 * 3600000).toISOString(),
+    category: "Technology",
+    readTime: 5
+  },
+  {
+    id: "demo-14",
+    title: "Amazon Launches Same-Hour Drone Delivery in 50 New Cities",
+    description: "Prime Air expands its autonomous drone delivery network, promising sub-60-minute delivery for eligible items under 5 pounds in participating urban areas.",
+    url: "https://example.com/amazon-drone",
+    image: "https://images.unsplash.com/photo-1473968512647-3e447244af8f?w=600&q=80",
+    source: "Business Daily",
+    author: "Rachel Kim",
+    publishedAt: new Date(Date.now() - 14 * 3600000).toISOString(),
+    category: "Business",
+    readTime: 3
+  },
+  {
+    id: "demo-15",
+    title: "UN Report Warns of Accelerating Biodiversity Loss in Tropical Regions",
+    description: "A comprehensive assessment documents a 40% decline in tropical species populations over the past two decades, urging immediate international conservation action.",
+    url: "https://example.com/biodiversity-loss",
+    image: "https://images.unsplash.com/photo-1441974231531-c6227db76b6e?w=600&q=80",
+    source: "World Report",
+    author: "Fatima Al-Hassan",
+    publishedAt: new Date(Date.now() - 15 * 3600000).toISOString(),
+    category: "Environment",
+    readTime: 5
+  },
+  {
+    id: "demo-16",
+    title: "Startup Raises $2B to Build World's First Commercial Fusion Reactor",
+    description: "The fusion energy company secured the largest clean energy funding round in history, targeting a grid-connected demonstration plant by 2031.",
+    url: "https://example.com/fusion-startup",
+    image: "https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?w=600&q=80",
+    source: "Tech Crunch",
+    author: "Liam O'Brien",
+    publishedAt: new Date(Date.now() - 16 * 3600000).toISOString(),
+    category: "Science",
+    readTime: 4
+  }
+];
+
+if (typeof module !== "undefined") module.exports = { DEMO_ARTICLES };

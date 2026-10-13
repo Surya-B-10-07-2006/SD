@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NewsPulse AI — Personalized News</title>
+  <meta name="description" content="A personalized news platform delivering stories based on your interests." />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="navbar" role="banner">
+    <div class="nav-inner">
+      <a class="brand" href="#" onclick="setView('home'); return false;" aria-label="NewsPulse Home">
+        <span class="brand-icon"><i data-lucide="zap"></i></span>
+        <span class="brand-name">NewsPulse</span>
+      </a>
+      <button class="nav-toggle" id="nav-toggle" aria-label="Toggle navigation">
+        <i data-lucide="menu"></i>
+      </button>
+      <nav class="nav-menu" id="nav-menu" role="navigation" aria-label="Main navigation">
+        <a href="#" class="nav-link active" data-view="home"><i data-lucide="home"></i><span>Home</span></a>
+        <a href="#" class="nav-link" data-view="foryou"><i data-lucide="sparkles"></i><span>For You</span></a>
+        <a href="#" class="nav-link" data-view="latest"><i data-lucide="clock"></i><span>Latest</span></a>
+        <a href="#" class="nav-link" data-view="explore"><i data-lucide="compass"></i><span>Explore</span></a>
+        <a href="#" class="nav-link" data-view="bookmarks"><i data-lucide="bookmark"></i><span>Bookmarks</span></a>
+        <a href="#" class="nav-link" data-view="history"><i data-lucide="history"></i><span>History</span></a>
+        <a href="#" class="nav-link" data-view="search"><i data-lucide="search"></i><span>Search</span></a>
+      </nav>
+      <div class="nav-actions">
+        <button class="btn-icon" id="theme-toggle" aria-label="Toggle theme" title="Toggle theme">
+          <i data-lucide="moon" id="theme-icon"></i>
+        </button>
+        <button class="btn-icon" id="refresh-btn" aria-label="Refresh news" title="Refresh news">
+          <i data-lucide="refresh-cw"></i>
+        </button>
+        <button class="btn-icon" id="edit-prefs-btn" aria-label="Edit preferences" title="Edit preferences">
+          <i data-lucide="settings"></i>
+        </button>
+
+      </div>
+    </div>
+  </header>
+
+  <!-- Demo Banner -->
+  <div class="demo-banner" id="demo-banner" role="status">
+    <i data-lucide="info"></i>
+    <span>Showing sample content — configure a NewsAPI key to load live news. See README for setup.</span>
+  </div>
+
+  <!-- Main Content -->
+  <main class="main-content" role="main">
+
+    <!-- HOME view -->
+    <div class="view-section" id="view-home">
+      <section class="welcome-section" id="welcome-section" aria-label="Welcome">
+        <div class="welcome-inner">
+          <div class="welcome-text">
+            <h1 class="welcome-heading">Good <span id="time-greeting">morning</span> &#128075;</h1>
+            <p class="welcome-sub">Here's what's happening in your world today.</p>
+            <div class="welcome-interests" id="welcome-cats" aria-label="Your interests"></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="briefing-section" id="briefing-section" aria-label="Daily Briefing">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="newspaper"></i> Your Daily Briefing</h2>
+          <span class="section-sub">Top stories at a glance</span>
+        </div>
+        <div class="briefing-list" id="briefing-list" role="list"></div>
+      </section>
+
+      <div class="category-filter-wrap">
+        <div class="category-filter" id="category-filter" role="group" aria-label="Filter by category"></div>
+      </div>
+
+      <section class="feed-section" aria-label="News feed">
+        <div class="section-header">
+          <h2 class="section-title" id="feed-title">Top Stories</h2>
+        </div>
+        <div class="news-grid" id="news-grid" role="feed" aria-label="News articles"></div>
+        <div class="empty-state" id="empty-state" hidden role="status">
+          <i data-lucide="inbox"></i>
+          <p>No articles found for your current filters.</p>
+          <p class="empty-sub">Try selecting different categories or refreshing.</p>
+          <button class="btn-primary" onclick="applyCategory('all')">Show All</button>
+        </div>
+        <div class="load-more-wrap">
+          <button class="btn-load-more" id="load-more-btn" hidden>Load More Stories</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- FOR YOU view -->
+    <div class="view-section" id="view-foryou" hidden>
+      <section class="welcome-section" id="welcome-section-fy" aria-label="For You">
+        <div class="welcome-inner">
+          <div class="welcome-text">
+            <h1 class="welcome-heading">Your Feed &#10024;</h1>
+            <p class="welcome-sub">Stories ranked by your interests and reading habits.</p>
+            <div class="welcome-interests" id="welcome-cats-fy" aria-label="Your interests"></div>
+          </div>
+        </div>
+      </section>
+      <div class="category-filter-wrap">
+        <div class="category-filter" id="category-filter-fy" role="group" aria-label="Filter by category"></div>
+      </div>
+      <section class="feed-section" aria-label="Personalized feed">
+        <div class="news-grid" id="news-grid-fy" role="feed"></div>
+        <div class="load-more-wrap">
+          <button class="btn-load-more" id="load-more-btn-fy" hidden>Load More</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- LATEST view -->
+    <div class="view-section" id="view-latest" hidden>
+      <section class="feed-section" aria-label="Latest news">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="clock"></i> Latest News</h2>
+          <span class="section-sub">Most recent stories first</span>
+        </div>
+        <div class="news-grid" id="news-grid-latest" role="feed"></div>
+        <div class="load-more-wrap">
+          <button class="btn-load-more" id="load-more-btn-latest" hidden>Load More</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- EXPLORE view -->
+    <div class="view-section" id="view-explore" hidden>
+      <section class="explore-section" aria-label="Explore Topics">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="compass"></i> Explore Topics</h2>
+          <p class="section-sub">Select a topic to discover related stories</p>
+        </div>
+        <div class="explore-grid" id="explore-grid" role="list"></div>
+      </section>
+      <section class="topic-feed" id="topic-feed" hidden aria-label="Topic news feed">
+        <div class="section-header">
+          <h2 class="section-title" id="topic-feed-title"></h2>
+        </div>
+        <div class="news-grid" id="topic-news-grid" role="feed"></div>
+      </section>
+    </div>
+
+    <!-- BOOKMARKS view -->
+    <div class="view-section" id="view-bookmarks" hidden>
+      <section class="bookmarks-section" aria-label="Bookmarks">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="bookmark"></i> Saved Articles</h2>
+        </div>
+        <div class="news-grid" id="bookmarks-grid" role="feed"></div>
+        <div class="empty-state" id="bookmarks-empty" hidden role="status">
+          <i data-lucide="bookmark-x"></i>
+          <p>No bookmarks yet.</p>
+          <p class="empty-sub">Tap the bookmark icon on any article to save it here.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- HISTORY view -->
+    <div class="view-section" id="view-history" hidden>
+      <section class="history-section" aria-label="Reading History">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="history"></i> Reading History</h2>
+          <button class="btn-ghost" id="clear-history-btn">
+            <i data-lucide="trash-2"></i> Clear History
+          </button>
+        </div>
+        <div class="history-list" id="history-list" role="list"></div>
+        <div class="empty-state" id="history-empty" hidden role="status">
+          <i data-lucide="book-open"></i>
+          <p>No reading history yet.</p>
+          <p class="empty-sub">Articles you open will appear here.</p>
+        </div>
+      </section>
+    </div>
+
+    <!-- SEARCH view -->
+    <div class="view-section" id="view-search" hidden>
+      <section class="search-section" aria-label="Search">
+        <div class="section-header">
+          <h2 class="section-title"><i data-lucide="search"></i> Search Articles</h2>
+        </div>
+        <div class="search-bar-wrap">
+          <div class="search-bar" role="search">
+            <i data-lucide="search" class="search-icon-inner"></i>
+            <input type="search" id="search-input" class="search-input"
+              placeholder="Search headlines, topics, sources…"
+              aria-label="Search articles" autocomplete="off" />
+            <button class="btn-icon" id="clear-search-btn" aria-label="Clear search">
+              <i data-lucide="x"></i>
+            </button>
+            <button class="btn-primary search-go" id="search-btn">Search</button>
+          </div>
+        </div>
+        <div class="recent-searches-wrap" id="recent-searches" hidden>
+          <div class="recent-searches-header">
+            <span>Recent searches</span>
+            <button class="btn-ghost small" id="clear-searches-btn">Clear all</button>
+          </div>
+          <div class="search-chips" id="search-chips"></div>
+        </div>
+        <div class="search-results" id="search-results" hidden>
+          <div class="section-header">
+            <h3 class="section-title" id="search-results-title"></h3>
+          </div>
+          <div class="news-grid" id="search-results-grid" role="feed"></div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- Article Modal -->
+  <div class="modal-overlay" id="article-modal" hidden role="dialog" aria-modal="true" aria-label="Article reader">
+    <div class="modal-box">
+      <button class="modal-close" id="modal-close" aria-label="Close article">
+        <i data-lucide="x"></i>
+      </button>
+      <div class="modal-scroll" id="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Onboarding Modal -->
+  <div class="modal-overlay" id="onboarding-modal" hidden role="dialog" aria-modal="true" aria-label="Select your interests">
+    <div class="modal-box onboarding-box">
+      <div class="onboarding-header">
+        <span class="brand-icon large"><i data-lucide="zap"></i></span>
+        <h2>Welcome to NewsPulse</h2>
+        <p>Select the topics you care about to personalize your feed.</p>
+      </div>
+      <div class="onboarding-cats" id="onboarding-cats" role="group" aria-label="Select interests"></div>
+      <div class="onboarding-actions">
+        <button class="btn-ghost" id="onboarding-skip">Skip for now</button>
+        <button class="btn-primary" id="onboarding-save">Start Reading</button>
+      </div>
+    </div>
+  </div>
+
+
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+  <script src="data/demo-news.js"></script>
+  <script src="storage.js"></script>
+  <script src="news-service.js"></script>
+  <script src="personalization.js"></script>
+  <script src="app.js"></script>
+  <script>
+    const hour = new Date().getHours();
+    const greetEl = document.getElementById("time-greeting");
+    if (greetEl) greetEl.textContent = hour < 12 ? "morning" : hour < 17 ? "afternoon" : "evening";
+    document.addEventListener("DOMContentLoaded", () => lucide.createIcons());
+  </script>
+</body>
+</html>
